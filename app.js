@@ -82,14 +82,14 @@ rl.on('close', () => {
     //Array.from(map)で連想配列を普通の配列に変換
     //sort() で渡す関数 → 比較関数（並び替えをするルール）
     //returnが正か負で並び替えをする（昇順、降順を決める）
-    return p2[1].change - p1[1].change;
+    return p1[1].change - p2[1].change;
   });
   //  console.log(rankingArray);
-  const rankingStrings = rankingArray.map((p) => {
+  const rankingStrings = rankingArray.map((p,i) => {
     //map関数
-    return p[0] + ': ' + p[1].p10 + '人 => ' + p[1].p15 + '人 変化率: ' + p[1].change;
+     return '\n 第' + (i+1) + '位 ' + p[0] + ': ' + p[1].p10 + '人 => ' + p[1].p15 + '人 変化率: ' + p[1].change;
   });
-   console.log(rankingStrings);
+   console.log('人が減った割合のランキング\n'+rankingStrings);
 
 
 
