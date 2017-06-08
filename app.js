@@ -1,7 +1,8 @@
 'use strict';
-//------------------
-//「2010 年から 2015 年にかけて 15〜19 歳の人が増えた割合の都道府県ランキング」を作成
-//------------------
+  //------------------
+  //「2010 年から 2015 年にかけて 15〜19 歳の人が増えた割合の都道府県ランキング」を作成
+  //------------------
+
 
 //ファイルを扱うモジュールの呼び出し
 const fs = require('fs');
@@ -17,6 +18,7 @@ const map = new Map();// key: 都道府県 value: 集計データのオブジェ
 //lineというイベントが発生したら、この無名関数を呼ぶ
 //lineSrringには、読み込んだ１行の文字列が入る
 rl.on('line', (lineString) => {
+  // console.log(lineString);
 
   //カンマで分割して配列にする
   const columns = lineString.split(',');
@@ -29,6 +31,9 @@ rl.on('line', (lineString) => {
   
   //集計年が、2010または2015である時のみ（数字で比較）
   if (year === 2010 || year === 2015) {
+    // console.log(year);
+    // console.log(proFevture);
+    // console.log(popu);
     
     //mapから県名をkeyにしたデータを取得
     let value = map.get(proFevture);
@@ -59,6 +64,7 @@ rl.resume();
 
 //'close' イベントは、全ての行を読み込み終わったときに呼び出し
 rl.on('close', () => {
+  // console.log(map);
 
   //都道府県ごとの変化率を計算
   //for-of 構文（mapの中身をループ）
@@ -69,7 +75,7 @@ rl.on('close', () => {
     //変化率を計算
     value.change = value.p15 / value.p10;
   }
-
+  // console.log(map);
 
   //変化率ごとに並べ替え
   const rankingArray = Array.from(map).sort((p1, p2) => {
@@ -78,5 +84,13 @@ rl.on('close', () => {
     //returnが正か負で並び替えをする（昇順、降順を決める）
     return p2[1].change - p1[1].change;
   });
-   console.log(rankingArray);
+  //  console.log(rankingArray);
+  const rankingStrings = rankingArray.map((p) => {
+    //map関数
+    return p[0] + ': ' + p[1].p10 + '人 => ' + p[1].p15 + '人 変化率: ' + p[1].change;
+  });
+   console.log(rankingStrings);
+
+
+
 });
